@@ -2,6 +2,8 @@
 spring:
   application:
     name: gateway
+  profiles:
+    active: dev
   cloud:
     config:  #配置中心需要
       discovery:
@@ -9,29 +11,20 @@ spring:
         service-id: config
       profile: dev
       label: master
-#    rabbit:
-#      bindings:
-#        myOutput:
-#          producer:
-#            ttl: 3000 #消息3秒不消费转入私信队列
-#            autoBindDlq: true #启动私信队列
-#            deadLetterExchange: myInput #绑定exchange
-#            deadLetterQueueName: myInput.product-in #死信队列名字：exchanName.queueName
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/  #服务中心的地址
-management:
-  endpoints:
-    web:
-      exposure:
-        include:  bus-refresh # 暴露bus-refresh为了接到通知
-server:
-  port: 8183
-zuul: #自定义路由路径
-  routes:
-#    prod: #可随便填
-#      path: /prod/** #基础路由路径
-#      serviceId: product #应用名
-    product: /prod/**  #简洁写法
-  #ignored-patterns:     #配置不被移动端调用的接口
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include:  bus-refresh # 暴露bus-refresh为了接到通知
+
+#zuul: #自定义路由路径
+#  routes:
+##    prod: #可随便填
+##      path: /prod/** #基础路由路径
+##      serviceId: product #应用名
+#    product: /prod/**  #简洁写法,所有product应用的请求，都可以用prod/** 代替
+#    ignored-patterns:  - /prod/env/test2    #配置不被移动端调用的接口,可以是一个集合
